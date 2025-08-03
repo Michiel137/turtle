@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "uln2803c")(type "KiCad")(uri "${KIPRJMOD}/uln2803c.kicad_sym")(options "")(descr ""))
+  (lib (name "library")(type "KiCad")(uri "${KIPRJMOD}/library.kicad_sym")(options "")(descr ""))
+)

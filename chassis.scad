@@ -6,22 +6,20 @@ $fa = $preview ? 12 : 3;
 $fs = $preview ? 2 : 0.2;
 $overlap = 0.01;
 
-function inch(value) = value * 25.4;
-
 diameter_pen = 10.75;
 radius_pen = diameter_pen / 2;
 height_pen = 26.5;
 
 layer = 0.2;
 
-rounding_board = inch(0.14);
-width_board = inch(2);
-length_board = inch(2);
+rounding_board = 4;
+width_board = 52;
+length_board = 48;
 right_board_mount = width_board / 2 - rounding_board;
 left_board_mount = -right_board_mount;
 width_board_mounts = right_board_mount - left_board_mount;
 back_board_mount = length_board / 2 - rounding_board;
-front_board_mount = back_board_mount - inch(1.4);
+front_board_mount = back_board_mount - 33;
 length_board_mounts = back_board_mount - front_board_mount;
 position_board_mounts = [
     [right_board_mount, back_board_mount],
@@ -38,6 +36,7 @@ height_motor = 13.1;
 chamfer = 0.4;
 
 module board() {
+    color("green")
     difference() {
         offset_sweep(rect([width_board, length_board], rounding=rounding_board), h=1.6, anchor=BOTTOM);
 
@@ -46,6 +45,11 @@ module board() {
             cyl(d=3.2, h=10);
         }
     }
+
+    // buzzer sticking out below the board
+    fwd(15.764)
+    color("black")
+    cyl(d=12, h=6, anchor=TOP);
 }
 
 // /// Holder for 4x AAA batteries with on/off switch.
@@ -73,8 +77,10 @@ module batteries() {
 }
 
 // bottom
-width_chassis = 63;
-rounding_chassis = rounding_board + width_chassis / 2 - width_board / 2;
+width_chassis = 60;
+// rounding_chassis = rounding_board + width_chassis / 2 - width_board / 2;
+radius_board_posts = 3.6;
+rounding_chassis = radius_board_posts;
 front_chassis = -radius_motor - rounding_board - length_board_mounts - rounding_chassis;
 back_chassis = spacing_battery / 2 + width_battery / 2 + 9;
 length_chassis = back_chassis - front_chassis;
@@ -121,14 +127,19 @@ module motor_mount() {
 module chassis() {
     difference() {
         union() {
+            length_cutout = 13;
+            width_cutout = 20;
+            path1 = [[0, length_cutout], [width_cutout / 2, length_cutout], [width_cutout / 2, 0], [width_chassis / 2, 0], [width_chassis / 2, length_chassis], [0, length_chassis]];
+            path2 = round_corners(path1, radius=[0, 2, 2, rounding_chassis, rounding_chassis, 0]);
+            path3 = union([path2, xflip(path2)])[0];
             back(front_chassis)
-            offset_sweep(rect([width_chassis, length_chassis], rounding=rounding_chassis), h=thickness_chassis, ends=os_chamfer(chamfer), anchor=TOP+FRONT);
+            offset_sweep(path3, h=thickness_chassis, ends=os_chamfer(chamfer), anchor=TOP+FRONT);
 
             // spine
             down(chamfer)
             difference() {
-                back(front_chassis)
-                cuboid([12 + 3, length_chassis, 1.8 + chamfer], rounding=1.8, edges=[TOP+FRONT, TOP+BACK], anchor=BOTTOM+FRONT);
+                back(front_chassis + length_cutout)
+                cuboid([12 + 3, length_chassis - length_cutout, 1.8 + chamfer], rounding=1.8, edges=[TOP+FRONT, TOP+BACK], anchor=BOTTOM+FRONT);
                 yflip_copy()
                 back(10)
                 cuboid([12 - 3, 100, 10], anchor=FRONT);
@@ -172,7 +183,7 @@ module chassis() {
             back(offset_board)
             for (position = position_board_mounts) {
                 move(position)
-                cyl(r=3.6, h=3.2, extra1=chamfer, anchor=BOTTOM);
+                cyl(r=radius_board_posts, h=3.2, extra1=chamfer, anchor=BOTTOM);
             }
 
             // board mounting holes
@@ -237,7 +248,6 @@ module chassis() {
     }
 }
 
-color("green")
 move([0, offset_board, 3.2])
 board();
 
@@ -246,4 +256,4 @@ ycopies(spacing_battery)
 down(3)
 batteries();
 
-chassis();
+!chassis();

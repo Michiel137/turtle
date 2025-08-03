@@ -1,0 +1,16 @@
+# build folder
+# gerber and drill files
+fabrication/
+
+# backup files
+*.FCStd1
+*-backups
+
+# schematic symbol library backups
+*.bak
+
+# local settings for the project
+*.kicad_prl
+
+# footprint library cache
+fp-info-cache

@@ -1,22 +1,15 @@
 include <BOSL2/std.scad>
 
-$fa = $preview ? 12 : 3;
-$fs = $preview ? 2 : 0.2;
-$overlap = 0.01;
+include <parameters.scad>
 
-// diameter_wheel = 53;  // OSTR V3
-diameter_wheel = 47.5;  // OSTR V2
-radius_wheel = diameter_wheel / 2;
 width_rim = 4;
 width_disc = 2.5;
-diameter_tire = 3;
-radius_tire = diameter_tire / 2;
+width_hub = 9;
 diameter_hub = 11;
 radius_hub = diameter_hub / 2;
-width_hub = 9;
+radius_rim = radius_wheel - 3 / 2 * radius_tire;
 
-chamfer = 0.4;
-rounding = 1;
+rounding_wheel = 1;
 
 module wheel() {
     difference() {
@@ -25,39 +18,39 @@ module wheel() {
             difference() {
                 down(width_disc - width_rim / 2)
                 difference() {
-                    cyl(r=radius_wheel - 3 / 4, h=width_rim, chamfer=chamfer);
-                    torus(r_maj=radius_wheel, r_min=radius_tire);
+                    cyl(r=radius_rim, h=width_rim, chamfer=chamfer);
+                    // tire recess
+                    torus(or=radius_wheel, r_min=radius_tire);
                 }
 
-                radius_spokes = radius_wheel - radius_tire - 1;
-                cyl(r=radius_spokes, h=width_rim - width_disc, rounding1=rounding, chamfer2=-chamfer, extra2=$overlap, anchor=BOTTOM);
+                // disc
+                radius_disc = radius_rim - 3 * chamfer;
+                cyl(r=radius_disc, h=width_rim - width_disc, rounding1=rounding_wheel, chamfer2=-chamfer, extra2=$overlap, anchor=BOTTOM);
 
-                diameter_hole = radius_spokes - radius_hub - 4 * rounding;
+                // disc holes
+                diameter_hole = radius_disc - radius_hub - 4 * rounding_wheel;
                 radius_hole = diameter_hole / 2;
                 zrot_copies(n=5)
-                back((radius_spokes + radius_hub) / 2)
-                cyl(r=radius_wheel / 4, h=width_disc, rounding=-rounding, extra=$overlap, anchor=TOP);
+                back((radius_disc + radius_hub) / 2)
+                cyl(r=radius_wheel / 4, h=width_disc, rounding=-rounding_wheel, extra=$overlap, anchor=TOP);
             }
 
-            cyl(r=radius_hub, h=width_hub - width_disc, rounding1=-rounding, rounding2=rounding, extra1=$overlap, anchor=BOTTOM);
+            // hub
+            cyl(r=radius_hub, h=width_hub - width_disc, rounding1=-rounding_wheel, rounding2=rounding_wheel, extra1=$overlap, anchor=BOTTOM);
         }
 
         // shaft
         path = intersection([circle(d=5), rect([3, 10])])[0];
         offset_sweep(path, h=width_hub, ends=os_chamfer(-chamfer, extra=$overlap), anchor=BOTTOM);
-        // shaft M3 set screws
+        // shaft M3 set screw (only one has to be used)
         up(width_hub - 3)
-        // cyl(d=2.8, h=diameter_hub, chamfer=-0.30, orient=RIGHT);
         cyl(d=2.8, h=diameter_hub, chamfer=-chamfer, orient=RIGHT);
     }
 }
 
 module tire() {
     up(width_rim / 2)
-    intersection() {
-        torus(r_maj=radius_wheel, r_min=radius_tire);
-        cyl(r=100, h=radius_tire * 3 / 2);
-    }
+    torus(or=radius_wheel, r_min=radius_tire);
 }
 
 wheel();

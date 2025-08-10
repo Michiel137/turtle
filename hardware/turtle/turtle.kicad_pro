@@ -480,10 +480,10 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "",
+      "plot": "fabrication/staging/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "turtle.step",
       "svg": "",
       "vrml": ""
     },

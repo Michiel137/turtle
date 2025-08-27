@@ -18,6 +18,8 @@ wall = 1.8;
 diameter_outer = diameter_ball + 2 * wall;
 radius_outer = radius_ball + wall;
 
+offset_mount = (diameter_ball + 2 * tolerance - 8) / 2;
+
 intersection() {
     cut = 1 / 2;
 
@@ -26,9 +28,11 @@ intersection() {
             bottom_half(z=height - radius_ball * cut)
             cyl(r=radius_outer, h=height + wall, rounding2=radius_outer, anchor=BOTTOM);
 
+            back(offset_mount)
             offset_sweep(rect([30 + 8, 8], rounding=8 / 2), h=2.4, top=os_chamfer(chamfer));
         }
 
+        back(offset_mount)
         xcopies(30)
         cyl(d=3.2, h=10);
 

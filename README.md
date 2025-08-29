@@ -42,4 +42,4 @@ De robot bevat alle bestanden die je nodig hebt, maar hij moet nog wel geconfigu
 ## Problemen Oplossen
 
 1. Zijn de batterijen leeg?
-1. Als de verbinding van Thonny met de robot niet meer lijkt te werken, verbind dan opnieuw door rechtonderin de statusbalk te klikken en "MicroPython (Raspberry Pi Pico) ws://<ip>:8266" te kiezen
+1. Als de verbinding van Thonny met de robot niet meer lijkt te werken, verbind dan opnieuw door rechtonderin de statusbalk te klikken en "MicroPython (Raspberry Pi Pico) ws://\<ip\>:8266" te kiezen

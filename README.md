@@ -27,17 +27,17 @@ De robot bevat alle bestanden die je nodig hebt, maar hij moet nog wel geconfigu
 1. OK
 1. Thonny maakt nu verbinding via WiFi. De USB kabel is niet meer nodig
 1. Op de robot staan een aantal scripts die je uit kan proberen: Bestand -> Open -> Raspberry Pi Pico
-    # blink.py - klipper met de leds
-    # noise.py - maak geluid
-    # collision.py - rij rond en probeer botsingen te voorkomen
-    # square.py - teken een vierkant
+    - blink.py - klipper met de leds
+    - noise.py - maak geluid
+    - collision.py - rij rond en probeer botsingen te voorkomen
+    - square.py - teken een vierkant
 1. Nadat je het script geopend hebt kan je het met F5 uitvoeren (of Uitvoeren -> Voer huidige script uit)
 1. Sommige scripts hebben geen einde. Je kan het script stoppen met Ctrl-C (of Uitvoeren -> Onderbreek uitvoering)
 1. Probeer de scripts uit en pas ze aan!
 1. Als je een idee hebt en een nieuw script wil maken, maak dan een nieuw bestand: Bestand -> Nieuw
-    # Bestanden hoeven niet op de robot te staan om ze uit te voeren: Bestand -> Opslaan -> Deze computer
-    # Het is een goed idee om voor een nieuw script te beginnen met een kopie van een bestaand script
-    # als je een fout in het script hebt gemaakt wordt dat in het shell scherm getoond als je het script uitvoerd
+    - Bestanden hoeven niet op de robot te staan om ze uit te voeren: Bestand -> Opslaan -> Deze computer
+    - Het is een goed idee om voor een nieuw script te beginnen met een kopie van een bestaand script
+    - als je een fout in het script hebt gemaakt wordt dat in het shell scherm getoond als je het script uitvoerd
 
 ## Problemen Oplossen
 

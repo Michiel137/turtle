@@ -161,7 +161,7 @@ module chassis() {
         union() {
             cyl(d=3.2, h=10);
             down(thickness_nut - 1.4)
-            regular_prism(n=6, d=6.5, h=10, anchor=BOTTOM);
+            regular_prism(n=6, d=6.4, h=10, anchor=BOTTOM);
         }
 
         // mounting holes caster
@@ -170,7 +170,7 @@ module chassis() {
         union() {
             cyl(d=3.2, h=10);
             down(thickness_nut - 1.4)
-            regular_prism(n=6, d=6.5, h=10, anchor=BOTTOM);
+            regular_prism(n=6, d=6.4, h=10, anchor=BOTTOM);
         }
 
         // mounting holes pen aligner

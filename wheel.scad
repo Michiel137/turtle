@@ -7,7 +7,7 @@ width_disc = 2.5;
 width_hub = 9;
 diameter_hub = 11;
 radius_hub = diameter_hub / 2;
-radius_rim = radius_wheel - 3 / 2 * radius_tire;
+radius_rim = radius_wheel - radius_tire;
 
 rounding_wheel = 1;
 
@@ -24,7 +24,7 @@ module wheel() {
                 }
 
                 // disc
-                radius_disc = radius_rim - 3 * chamfer;
+                radius_disc = radius_rim - 2 - 2 * chamfer;
                 cyl(r=radius_disc, h=width_rim - width_disc, rounding1=rounding_wheel, chamfer2=-chamfer, extra2=$overlap, anchor=BOTTOM);
 
                 // disc holes
@@ -32,7 +32,7 @@ module wheel() {
                 radius_hole = diameter_hole / 2;
                 zrot_copies(n=5)
                 back((radius_disc + radius_hub) / 2)
-                cyl(r=radius_wheel / 4, h=width_disc, rounding=-rounding_wheel, extra=$overlap, anchor=TOP);
+                cyl(r=radius_hole, h=width_disc, rounding=-rounding_wheel, extra=$overlap, anchor=TOP);
             }
 
             // hub
@@ -54,5 +54,5 @@ module tire() {
 }
 
 wheel();
-color("grey")
-tire();
+// color("grey")
+// tire();
